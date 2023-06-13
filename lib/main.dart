@@ -70,7 +70,7 @@ class _MyHomePageState extends State<MyHomePage> {
       });
 
       Request request = Request(
-        type: "1",billId: "TestBillId",amount: "100"
+        type: 1,billId: "TestBillId", totalAmount: 100, cashRoundOffType: 1, posId: "test01"
       );
 
       String salesRequest = jsonEncode(request);

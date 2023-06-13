@@ -1,35 +1,45 @@
+import 'dart:ffi';
+
 import 'package:json_annotation/json_annotation.dart';
 
 @JsonSerializable(checked: true, createFactory: true, fieldRename: FieldRename.snake)
 class Request {
   Request({
       this.action = "",
-      this.amount = "",
+      this.totalAmount = 0,
       this.billId = "",
       this.date = "",
+      this.posId = "",
       this.time = "",
-      this.type = "",});
+      this.cashRoundOffType = 0,
+      this.type = 0,});
 
   Request.fromJson(dynamic json) {
+    type = json['type'];
     action = json['action'];
-    amount = json['amount'];
-    billId = json['bill_id'];
     date = json['date'];
     time = json['time'];
-    type = json['type'];
+    posId = json['posId'];
+    billId = json['billId'];
+    totalAmount = json['totalAmount'];
+    cashRoundOffType = json['cashRoundOffType'];
   }
   String action = "";
-  String amount = "";
+  double totalAmount = 0;
   String billId = "";
   String date = "";
+  String posId = "";
   String time = "";
-  String type = "";
+  int type = 0;
+  int cashRoundOffType = 0;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
     map['action'] = action;
-    map['amount'] = amount;
-    map['bill_id'] = billId;
+    map['totalAmount'] = totalAmount;
+    map['cashRoundOffType'] = cashRoundOffType;
+    map['posId'] = posId;
+    map['billId'] = billId;
     map['date'] = date;
     map['time'] = time;
     map['type'] = type;
