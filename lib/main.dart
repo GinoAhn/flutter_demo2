@@ -3,6 +3,10 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_demo2/PrinterRequest.dart';
+import 'package:flutter_demo2/Chunk.dart';
+import 'BarcodeProperty.dart';
+import 'Property.dart';
 import 'Request.dart';
 import 'package:logger/logger.dart';
 
@@ -69,8 +73,137 @@ class _MyHomePageState extends State<MyHomePage> {
         }
       });
 
-      Request request = Request(
-        type: 1,billId: "TestBillId", totalAmount: 100, cashRoundOffType: 1, posId: "test01"
+      // Request request = Request(
+      //   type: 1,billId: "TestBillId", totalAmount: 100, cashRoundOffType: 1, posId: "test01"
+      // );
+
+      List<Chunk> list  = [];
+      list.add(
+          Chunk(
+            string: "------------------------------------------------",
+            property: Property(
+                align: "AlignLeft"
+            )
+          )
+      );
+      list.add(
+        Chunk(
+            string: "Test - Header - Test",
+            property: Property(
+              align: "AlignCenter"
+            )
+        )
+      );
+      list.add(
+          Chunk(
+              string: "------------------------------------------------",
+              property: Property(
+                  align: "AlignCenter"
+              )
+          )
+      );
+      list.add(
+          Chunk(
+              string: "Printer",
+              property: Property(
+                lineBreak: false,
+                align: "AlignCenter",
+              )
+          )
+      );
+      list.add(
+          Chunk(
+              string: " Test ",
+              property: Property(
+                  lineBreak: false,
+                  align: "AlignLeft",
+                  bold: true
+              )
+          )
+      );
+      list.add(
+          Chunk(
+              string: "First",
+              property: Property(
+                lineBreak: true,
+                align: "AlignLeft",
+              )
+          )
+      );
+      list.add(
+          Chunk(
+              string: "Printer Test Second",
+              property: Property(
+                align: "AlignCenter",
+              )
+          )
+      );
+      list.add(
+          Chunk(
+              string: "Printer Test Third",
+              property: Property(
+                align: "AlignRight",
+                whDouble: true,
+              )
+          )
+      );
+      list.add(
+          Chunk(
+              string: " ",
+              property: Property(
+                  cut: "PartialCut"
+              )
+          )
+      );
+      list.add(
+          Chunk(
+              string: "Printer Test",
+              property: Property(
+                  barcode: BarcodeProperty(
+                    frontSpace: 0,
+                    barcodeQR: true,
+                  )
+              )
+          )
+      );
+      list.add(
+          Chunk(
+              string: " ",
+              property: Property()
+          )
+      );
+      list.add(
+          Chunk(
+              string: "Printer Test",
+              property: Property(
+                  barcode: BarcodeProperty(
+                    frontSpace: 0,
+                    barcodePDF417: true,
+                  )
+              )
+          )
+      );
+      list.add(
+          Chunk(
+              string: " ",
+              property: Property()
+          )
+      );
+      list.add(
+          Chunk(
+              string: "9876543210",
+              property: Property(
+                  barcode: BarcodeProperty(
+                    frontSpace: 0,
+                    barcodeCode128: true,
+                  )
+              )
+          )
+      );
+
+      String data = jsonEncode(list);
+      PrintRequest request = PrintRequest(
+          type: 14, action: "Request", posId: "1", data: data
       );
 
       String salesRequest = jsonEncode(request);
